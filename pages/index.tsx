@@ -5,15 +5,10 @@ import { getSortedPostsData } from '../lib/posts'
 import Link from 'next/link'
 import Date from '../components/date'
 import { GetStaticProps, NextPage } from 'next'
-
-export type Post = {
-  id: string;
-  date: string;
-  title: string;
-}
+import { Post } from '../types/post'
 
 type Props = {
-  allPostsData: Post[];
+  allPostsData: Omit<Post, "contentHtml">[];
 }
 
 const Home: NextPage<Props> = ({ allPostsData }) => {
@@ -53,7 +48,7 @@ const Home: NextPage<Props> = ({ allPostsData }) => {
   )
 }
 
-export const getStaticProps:GetStaticProps<Props> = async () => {
+export const getStaticProps:GetStaticProps<Props,Omit<Post, "contentHtml">> = async () => {
   const allPostsData = getSortedPostsData()
   return {
     props: {
